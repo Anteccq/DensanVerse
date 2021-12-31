@@ -16,7 +16,7 @@ namespace DensanVerse.Server.Services
             _rand = new Random();
         }
 
-        private void ExecuteEffect(FieldEffect effect, FieldContext playerContext, FieldContext enemyContext, string selfCardFieldId, string selectedCardFieldId)
+        public void ExecuteEffect(FieldEffect effect, FieldContext playerContext, FieldContext enemyContext, string selfCardFieldId, string selectedCardFieldId)
         {
             var context = new TargetContext(playerContext, enemyContext, selfCardFieldId, selectedCardFieldId);
 

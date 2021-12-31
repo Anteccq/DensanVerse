@@ -3,6 +3,7 @@ using DensanVerse.Server.Models.Battle;
 using DensanVerse.Server.Models.Cards;
 using DensanVerse.Server.Models.Cards.Effects;
 using DensanVerse.Server.Models.Cards.Skills;
+using DensanVerse.Server.Models.Cards.Skills.Conditions;
 using DensanVerse.Server.Models.Field;
 using DensanVerse.Server.Models.Players;
 
@@ -31,7 +32,7 @@ namespace DensanVerse.Server.Services
                 : throw new InvalidOperationException("GG");
         }
 
-        public void PlayerAction(string battleId, int actionPlayerId, int fieldCardId, FieldEffect effect, int targetCardId)
+        public void FieldCardAction(string battleId, int actionPlayerId, string selfCardFieldId, FieldEffect effect, string targetCardFieldId)
         {
             var battle = GetBattle(battleId);
             var (playerContext, enemyContext) =
@@ -39,6 +40,8 @@ namespace DensanVerse.Server.Services
                 ? (battle.TeamRebelFieldContext, battle.TeamOwnerFieldContext)
                 : (battle.TeamOwnerFieldContext, battle.TeamRebelFieldContext);
 
+            var service = new FieldEffectService();
+            service.ExecuteEffect(effect, playerContext, enemyContext, selfCardFieldId, targetCardFieldId);
         }
 
         //Normal Field
